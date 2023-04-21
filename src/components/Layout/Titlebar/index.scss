@@ -1,0 +1,62 @@
+.titlebar-container{
+  $height:30px;
+  $bg:#fff;
+  $hover:#ccc;
+
+  &>.drag-region{
+    width: calc(100vw - 3 * $height);
+    height: $height;
+    z-index: 997;
+    .file-name{
+      position: absolute;
+      width: 100vw;
+      left: 0;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: $height;
+    }
+  }
+  &>.toolbar{
+    height: $height;
+    z-index: 998;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .vditor-toolbar{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      &>div{
+        height: $height;
+        button{
+          height: $height;
+        }
+      }
+    }
+  }
+  .titlebar {
+    height: $height;
+    background: $bg;
+    user-select: none;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    z-index: 999;
+    .titlebar-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: $height;
+      height: $height;
+    }
+    .titlebar-button:hover {
+      background: $hover;
+    }
+  }
+}
