@@ -1,3 +1,5 @@
+use tauri::Window;
+
 
 #[tauri::command]
 pub fn read_file(path:String)->Option<String>{
@@ -23,3 +25,11 @@ pub fn save_file(path:String,content:String)->Option<String>{
   }
 }
 
+
+#[tauri::command]
+pub fn update_menu_lang(window:Window,lang:String){
+  eprintln!("update_lang {}",lang);
+  
+  let menu_handle=window.menu_handle();
+  crate::menu::update_menu(lang, menu_handle);
+}

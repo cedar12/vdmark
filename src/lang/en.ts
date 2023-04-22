@@ -9,19 +9,24 @@ const en = {
     'table': 'table',
   },
   menu:{
-    file:'File',
-    new:'New',
-    open:'Open',
-    save:'Save',
-    saveas:'Save As',
-    config:'Setting',
-    help:'Help',
-    about:'About',
+    file:{
+      name:'File',
+      new:'New',
+      open:'Open',
+      save:'Save',
+      saveas:'Save As',
+      config:'Config',
+    },
+    help:{
+      name:'Help',
+      about:'About',
+    },
+    
     view:{
       name:'View',
-      edit:'Edit Mode',
-      source:'Source Code Mode',
-      mix:'Mixed mode',
+      wysiwyg:'WYSIWYG',
+      ir:'IR',
+      sv:'SV',
     }
   }
 }

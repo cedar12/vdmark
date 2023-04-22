@@ -1,0 +1,22 @@
+
+{
+    "file":{
+      "name":"File",
+      "new":"New",
+      "open":"Open",
+      "save":"Save",
+      "saveas":"Save as",
+      "config":"Config"
+    },
+    "help":{
+      "name":"Help",
+      "about":"About"
+    },
+    "view": {
+      "name":"View",
+      "wysiwyg":"WYSIWYG",
+      "ir":"IR",
+      "sv":"SV"
+    }
+}
+  

@@ -8,31 +8,31 @@ const {t}=useI18n();
 const menus=[
   {
     key:'file',
-    name:t('menu.file'),
+    name:t('menu.file.name'),
     submenu:[
       {
-        key:'new',
-        name:t('menu.new'),
+        key:'file.new',
+        name:t('menu.file.new'),
         cmd:['ctrl','n'],
       },
       {
-        key:'open',
-        name:t('menu.open'),
+        key:'file.open',
+        name:t('menu.file.open'),
         cmd:['ctrl','o'],
       },
       {
-        key:'save',
-        name:t('menu.save'),
+        key:'file.save',
+        name:t('menu.file.save'),
         cmd:['ctrl','s'],
       },
       {
-        key:'resave',
-        name:t('menu.saveas'),
+        key:'file.saveas',
+        name:t('menu.file.saveas'),
         cmd:['ctrl','alt','s'],
       },
       {
-        key:'config',
-        name:t('menu.config'),
+        key:'file.config',
+        name:t('menu.file.config'),
         cmd:[],
       }
     ]
@@ -42,29 +42,29 @@ const menus=[
     name:t('menu.view.name'),
     submenu:[
       {
-        key:'viewEdit',
-        name:t('menu.view.edit'),
+        key:'view.wysiwyg',
+        name:t('menu.view.wysiwyg'),
         cmd:[],
       },
       {
-        key:'viewSource',
-        name:t('menu.view.source'),
+        key:'view.ir',
+        name:t('menu.view.ir'),
         cmd:[],
       },
       {
-        key:'viewMix',
-        name:t('menu.view.mix'),
+        key:'view.sv',
+        name:t('menu.view.sv'),
         cmd:[],
       }
     ]
   },
   {
     key:'help',
-    name:t('menu.help'),
+    name:t('menu.help.name'),
     submenu:[
       {
-        key:'about',
-        name:t('menu.about'),
+        key:'hellp.about',
+        name:t('menu.help.about'),
         cmd:[],
       }
     ]

@@ -5,7 +5,7 @@
       {{ fileName }}{{ isChanged?' *':'' }}
     </div>
   </div>
-  <Menu @click="onClickMenu"></Menu>
+  <Menu @click="onClickMenu" v-if="osType==='Windows_NT'"></Menu>
   <div class="titlebar">
     <div class="titlebar-button" id="titlebar-minimize" @click="appWindow.minimize()">
       <img
@@ -34,10 +34,17 @@ import './index.scss';
 import {useEditorStore} from '../../../store/editor';
 import {storeToRefs} from 'pinia';
 import Menu from './Menu.vue';
+import { type } from '@tauri-apps/api/os';
+import { emit, listen } from '@tauri-apps/api/event';
+import { useAppStore } from '../../../store/app';
+
+const osType = await type();
 
 const editorStore=useEditorStore();
+const appStore=useAppStore();
 
-const {fileName,path,isChanged,source,value}=storeToRefs(editorStore);
+const {fileName,path,isChanged,source,value,mode}=storeToRefs(editorStore);
+const {showConfig}=storeToRefs(appStore);
 
 
 const openFileDialog=async ()=>{
@@ -93,27 +100,35 @@ const newFile=async ()=>{
 
 const onClickMenu=async (key:string)=>{
   switch(key){
-    case 'new':
+    case 'file.new':
       await newFile();
       break;
-    case 'open':
+    case 'file.open':
       await openFileDialog();
       break;
-    case 'save':
+    case 'file.save':
       await saveFile();
       break;
-    case 'resave':
+    case 'file.saveas':
       await saveAsFile(undefined);
       break;
-    case 'config':
-      // showConfig.value=!showConfig.value;
+    case 'file.config':
+      showConfig.value=!showConfig.value;
       break;
-    case 'viewEdit':
-
+    case 'view.wysiwyg':
+      mode.value='wysiwyg';
       break;
-    case 'viewSource':
-
+    case 'view.ir':
+      mode.value='ir';
+      break;
+    case 'view.sv':
+      mode.value='sv';
       break;
   }
 }
+
+const unlisten = await listen('menu', (event) => {
+  console.log(event.payload);
+  onClickMenu(event.payload as string);
+})
 </script>
