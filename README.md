@@ -11,7 +11,7 @@
 * 实现 CommonMark 和 GFM 规范
 * 可使用拖拽、剪切板粘贴上传图片至[PicGo](https://molunerfinn.com/PicGo/)图床
 * 粘贴 HTML 自动转换为 Markdown
-* 支持主窗口大小拖拽、字符计数
+* 支持窗口大小拖拽、字符计数
 * 多语言支持，内置中、英文本地化
 
 # 界面

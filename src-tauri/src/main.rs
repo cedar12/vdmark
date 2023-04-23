@@ -12,21 +12,7 @@ use window_shadows::set_shadow;
 fn main() {
     let builder=tauri::Builder::default();
     builder.menu(menu::create_menu("zh".into()))
-    .on_menu_event(|event| {
-        let id=event.menu_item_id();
-        eprintln!("menu item_id {}",id);
-        match  id{
-          "quit" => {
-            std::process::exit(0);
-          }
-          "close" => {
-            event.window().close().unwrap();
-          }
-          _ => {
-            event.window().emit("menu", id).unwrap();
-          }
-        }
-      })
+   
         .setup(|app|{
             let window = app.get_window("main").unwrap();
             if cfg!(target_os = "windows") {

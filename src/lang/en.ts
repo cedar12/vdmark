@@ -5,6 +5,8 @@ const menu:Menu=await invoke('get_lang',{lang:'en'});
 
 const en = {
   base:'base',
+  editor:'edtior',
+  typewriterMode:'Typewriter Mode',
   lang:'language',
   image:'image',
   theme:'theme',

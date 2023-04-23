@@ -2,27 +2,32 @@
     <div class="config-container" @click="showConfig=false">
         <div class="dialog" @click.stop="">
             <div class="outline">
-                <div>
+                <div class="outline-item">
+                    <a href="#editor">{{ $t('editor') }}</a>
+                </div>
+                <div class="outline-item">
                     <a href="#theme">{{ $t('theme') }}</a>
                 </div>
-                <div>
+                <div  class="outline-item">
                     <a href="#lang">{{ $t('lang') }}</a>
                 </div>
-                <div><a href="#image">{{ $t('image') }}</a></div>
+                <div  class="outline-item"><a href="#image">{{ $t('image') }}</a></div>
             </div>
             <div class="content">
+
+                <div>
+                    <h2 id="editor">{{ $t('editor') }}</h2>
+                    <label>{{$t('typewriterMode')}}</label>
+                    <input type="checkbox" />
+                </div>
+                
                 <div>
                     <h2 id="theme">{{ $t('theme') }}</h2>
-                    <select >
-                        <option value="dark">dark</option>
-                        <option value="classic">classic</option>
-                        <option value="system">system</option>
+                    <select name="" id="">
+                        <option>classic</option>
+                        <option>dark</option>
+                        <option>system</option>
                     </select>
-                </div>
-                <div>
-                    <h2 id="theme">打字机</h2>
-                    <label>是否启用打字机模式</label>
-                    <input type="checkbox" />
                 </div>
                 <div>
                     <h2 id="lang">{{ $t('lang') }}</h2>
@@ -34,10 +39,7 @@
                 <div>
                     <h2 id="image">{{ $t('image') }}</h2>
                     <div>
-                        PicGo-Server
-                    </div>
-                    <div>
-                        <label>{{ $t('addr') }}</label>
+                        <label>PicGo-Server</label>
                         <input placeholder="127.0.0.1:36667"/>
                     </div>
                 </div>

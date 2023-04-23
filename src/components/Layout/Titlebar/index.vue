@@ -1,5 +1,5 @@
 <template>
-<div data-tauri-drag-region class="titlebar-container">
+<div data-tauri-drag-region class="titlebar-container"  v-if="osType==='Windows_NT'">
   <div data-tauri-drag-region class="drag-region">
     <div data-tauri-drag-region class="file-name" :title="path||''">
       {{ fileName }}{{ isChanged?' *':'' }}
@@ -50,7 +50,7 @@ const editorStore=useEditorStore();
 const appStore=useAppStore();
 
 const {fileName,path,isChanged,source,value,mode}=storeToRefs(editorStore);
-const {showConfig,pin}=storeToRefs(appStore);
+const {showConfig,pin,osType}=storeToRefs(appStore);
 
 const onPin=async ()=>{
   pin.value=!pin.value;
@@ -139,19 +139,14 @@ const onClickMenu=async (key:string)=>{
   }
 }
 
-var unlisten:UnlistenFn|null = null;
 
 onMounted(async ()=>{
-  unlisten = await listen('menu', (event) => {
-    console.log(event.payload);
-    onClickMenu(event.payload as string);
+  appWindow.onMenuClicked(menuId=>{
+    onClickMenu(menuId.payload);
   })
 })
 
 onBeforeUnmount(()=>{
-  if(unlisten){
-    unlisten();
-  }
   
 })
 </script>

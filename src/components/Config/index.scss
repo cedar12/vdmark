@@ -23,6 +23,11 @@
             width: 100px;
             border-right: .1em solid #ccc;
             box-sizing: border-box;
+            .outline-item{
+                a{
+                    font-size: 1.4em;
+                }
+            }
         }
         &>.content{
             box-sizing: border-box;
@@ -30,6 +35,9 @@
             overflow: auto;
             flex: 1;
             padding: .4em 1em;
+            h2{
+                border-bottom: .1em solid #ccc;
+            }
         }
     }
 }

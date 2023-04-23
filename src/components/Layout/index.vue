@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Titlebar v-if="osType==='Windows_NT'" />
+    <Titlebar />
     <slot></slot>
     <Config v-if="showConfig"/> 
   </div>
