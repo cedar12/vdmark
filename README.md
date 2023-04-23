@@ -1,26 +1,27 @@
-# Tauri + Vue 3 + TypeScript
+# RDmark
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+[RDmark](https://github.com/cedar12/rdmark)是一款桌面端的Markdown编辑器和阅读器，支持所见即所得、即时渲染（类似 Typora）和分屏预览模式。
 
 ---
 
+# 特性
 
-| col1 | col2 | col3 |
-| ---- | ---- | ---- |
-| 1    | 2    | 3    |
-| 4    | 5    | 6    |
+* 支持三种编辑模式：所见即所得（wysiwyg）、即时渲染（ir）、分屏预览（sv）
+* 支持大纲、数学公式、脑图、图表、流程图、甘特图、时序图、五线谱、[多媒体](https://ld246.com/article/1589813914768)、语音阅读、标题锚点、代码高亮及复制、graphviz 渲染、[plantuml](https://ld246.com/forward?goto=https%3A%2F%2Fplantuml.com)UML 图
+* 实现 CommonMark 和 GFM 规范
+* 可使用拖拽、剪切板粘贴上传图片至[PicGo](https://molunerfinn.com/PicGo/)图床
+* 粘贴 HTML 自动转换为 Markdown
+* 支持主窗口大小拖拽、字符计数
+* 多语言支持，内置中、英文本地化
 
-abc
+# 界面
+
+![](https://cdn.jsdelivr.net/gh/cedar12/picgo@main/images/rdmark.jpg)
+
+---
+
+# 鸣谢
+
+[vditor (github.com)](https://github.com/Vanessa219/vditor)
+
+[tauri (github.com)](https://github.com/tauri-apps/tauri)

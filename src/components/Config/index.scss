@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 996;
+    z-index: 994;
     .dialog{
         width: 80%;
         height: 80%;
@@ -16,5 +16,20 @@
         box-shadow: 0 0 20px #ccc;
         border-radius: 5px;
         padding: 12px;
+        display: flex;
+        &>.outline{
+            height: 100%;
+            overflow: auto;
+            width: 100px;
+            border-right: .1em solid #ccc;
+            box-sizing: border-box;
+        }
+        &>.content{
+            box-sizing: border-box;
+            height: 100%;
+            overflow: auto;
+            flex: 1;
+            padding: .4em 1em;
+        }
     }
 }

@@ -1,24 +1,15 @@
 .editor-container{
   border: none;
-  height: calc(100vh - var(--titlebarHeight));
+  // height: calc(100vh - var(--titlebarHeight));
   box-sizing: border-box;
   .vditor-outline__content{
-    height: calc(100vh - var(--titlebarHeight) - 40px - 30px);
+    height: calc(100% - 30px);
     overflow: auto;
-  }
-  .vditor-toolbar{
-    // height: 36px;
-  }
-  .vditor-panel{
-    // z-index: 77;
-  }
-  .vditor-hint{
-    // z-index: 77 !important;
   }
   
   .vditor-ir{
     z-index: 1;
-    height: calc(100vh - 70px);
+    // height: calc(100vh - 70px);
     overflow: auto;
     &>.vditor-reset{
       box-sizing: border-box;

@@ -1,26 +1,33 @@
 <template>
 <div data-tauri-drag-region class="titlebar-container">
   <div data-tauri-drag-region class="drag-region">
-    <div data-tauri-drag-region class="file-name" :title="path">
+    <div data-tauri-drag-region class="file-name" :title="path||''">
       {{ fileName }}{{ isChanged?' *':'' }}
     </div>
   </div>
-  <Menu @click="onClickMenu" v-if="osType==='Windows_NT'"></Menu>
+  
+  <Menu @click="onClickMenu" ></Menu>
   <div class="titlebar">
+    <div class="titlebar-button" @click="onPin" :class="{pin:pin}" :title="$t('pin')">
+      <Pin></Pin>
+    </div>
     <div class="titlebar-button" id="titlebar-minimize" @click="appWindow.minimize()">
-      <img
+      <!-- <img
         src="https://api.iconify.design/mdi:window-minimize.svg"
         alt="minimize"
-      />
+      /> -->
+      <Minus></Minus>
     </div>
     <div class="titlebar-button" id="titlebar-maximize" @click="appWindow.toggleMaximize()">
-      <img
+      <!-- <img
         src="https://api.iconify.design/mdi:window-maximize.svg"
         alt="maximize"
-      />
+      /> -->
+      <Browser></Browser>
     </div>
     <div class="titlebar-button" id="titlebar-close" @click="appWindow.close()">
-      <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
+      <!-- <img src="https://api.iconify.design/mdi:close.svg" alt="close" /> -->
+      <Close></Close>
     </div>
   </div>
   
@@ -34,18 +41,21 @@ import './index.scss';
 import {useEditorStore} from '../../../store/editor';
 import {storeToRefs} from 'pinia';
 import Menu from './Menu.vue';
-import { type } from '@tauri-apps/api/os';
-import { emit, listen } from '@tauri-apps/api/event';
+import { emit, listen, UnlistenFn } from '@tauri-apps/api/event';
 import { useAppStore } from '../../../store/app';
-
-const osType = await type();
+import { onBeforeUnmount, onMounted } from 'vue';
+import {Pin,Close,Minus,Browser} from '@icon-park/vue-next';
 
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
 const {fileName,path,isChanged,source,value,mode}=storeToRefs(editorStore);
-const {showConfig}=storeToRefs(appStore);
+const {showConfig,pin}=storeToRefs(appStore);
 
+const onPin=async ()=>{
+  pin.value=!pin.value;
+  await invoke('pin',{pin:pin.value});
+}
 
 const openFileDialog=async ()=>{
   // const path:string = await invoke("open_file_dialog", {});
@@ -62,7 +72,7 @@ const openFileDialog=async ()=>{
   }
 }
 const saveFile=async ()=>{
-  if(path){
+  if(path.value){
     // console.log(editorStore.value);
     let err:string=await invoke('save_file',{path:editorStore.path,content:editorStore.value});
     if(!err){
@@ -70,6 +80,8 @@ const saveFile=async ()=>{
     }else{
       console.error(err);
     }
+  }else{
+    saveAsFile(undefined);
   }
 }
 
@@ -127,8 +139,19 @@ const onClickMenu=async (key:string)=>{
   }
 }
 
-const unlisten = await listen('menu', (event) => {
-  console.log(event.payload);
-  onClickMenu(event.payload as string);
+var unlisten:UnlistenFn|null = null;
+
+onMounted(async ()=>{
+  unlisten = await listen('menu', (event) => {
+    console.log(event.payload);
+    onClickMenu(event.payload as string);
+  })
+})
+
+onBeforeUnmount(()=>{
+  if(unlisten){
+    unlisten();
+  }
+  
 })
 </script>

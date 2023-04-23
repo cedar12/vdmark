@@ -2,7 +2,7 @@
 use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, window::MenuHandle};
 use crate::lang::get_lang;
 
-#[cfg(not(target_os="windows"))]
+// #[cfg(not(target_os="windows"))]
 pub fn create_menu(lang:String)->Menu{
 
     let locale=get_lang(lang);
@@ -44,7 +44,7 @@ pub fn update_menu(lang:String,menu_handle:MenuHandle){
 }
 
 
-#[cfg(target_os="windows")]
-pub fn create_menu()->Menu{
-    Menu::new()
-}
+// #[cfg(target_os="windows")]
+// pub fn create_menu(_lang:String)->Menu{
+//     Menu::new()
+// }

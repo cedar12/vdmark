@@ -25,6 +25,11 @@
       },
       "os": {
         "all": true
+      },
+      "clipboard": {
+        "all": false,
+        "readText": true,
+        "writeText": false
       }
     },
     "bundle": {
@@ -36,7 +41,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.cedar12.rdmark",
       "targets": "all"
     },
     "security": {
@@ -52,7 +57,7 @@
         "title": "vdmark",
         "width": 800,
         "height": 600,
-        "decorations": true 
+        "decorations": false
       }
     ]
   }

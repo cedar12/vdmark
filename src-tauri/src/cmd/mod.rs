@@ -1,4 +1,8 @@
-use tauri::Window;
+use std::collections::HashMap;
+use reqwest::blocking::Client;
+use tauri::{Window};
+
+use crate::lang::Lang;
 
 
 #[tauri::command]
@@ -32,4 +36,34 @@ pub fn update_menu_lang(window:Window,lang:String){
   
   let menu_handle=window.menu_handle();
   crate::menu::update_menu(lang, menu_handle);
+}
+
+#[tauri::command]
+pub fn get_lang(lang:String)->Lang{
+  crate::lang::get_lang(lang)
+}
+
+#[tauri::command]
+pub fn pin(window:Window,pin:bool){
+  window.set_always_on_top(pin).unwrap();
+}
+
+#[derive(serde::Serialize,serde::Deserialize)]
+pub struct PicGoResp{
+  success:bool,
+  result:Vec<String>,
+}
+
+#[tauri::command]
+pub fn update_picgo(path:&str)->PicGoResp{
+  let client = Client::new();
+  let mut json=HashMap::new();
+  json.insert("list", vec![path]);
+
+  let response = client.post("http://127.0.0.1:36677/upload")
+      .json(&json)
+      .send()
+      .unwrap();
+  let picgo_resp=response.json().unwrap();
+  picgo_resp
 }

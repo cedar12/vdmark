@@ -16,6 +16,7 @@
       justify-content: center;
       align-items: center;
       height: $height;
+      cursor: default;
     }
   }
   &>.toolbar{
@@ -54,6 +55,9 @@
       align-items: center;
       width: $height;
       height: $height;
+      &.pin{
+        background-color: $hover;
+      }
     }
     .titlebar-button:hover {
       background: $hover;

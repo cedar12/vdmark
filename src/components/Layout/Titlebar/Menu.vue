@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import {ref,defineEmits} from 'vue';
+import {ref,reactive,defineEmits, onMounted, onBeforeUnmount} from 'vue';
 import {useI18n} from 'vue-i18n';
 
 const emit=defineEmits(['click']);
-const {t}=useI18n();
+const {t,locale}=useI18n();
 
-const menus=[
+interface MenuItem{
+  key:string,
+  name:string,
+  submenu:Array<SubMenuItem>
+}
+interface SubMenuItem{
+  key:string,
+  name:string,
+  cmd:Array<string>,
+}
+
+const menus=reactive<Array<MenuItem>>([
   {
     key:'file',
     name:t('menu.file.name'),
@@ -13,22 +24,22 @@ const menus=[
       {
         key:'file.new',
         name:t('menu.file.new'),
-        cmd:['ctrl','n'],
+        cmd:['Ctrl','N'],
       },
       {
         key:'file.open',
         name:t('menu.file.open'),
-        cmd:['ctrl','o'],
+        cmd:['Ctrl','O'],
       },
       {
         key:'file.save',
         name:t('menu.file.save'),
-        cmd:['ctrl','s'],
+        cmd:['Ctrl','S'],
       },
       {
         key:'file.saveas',
         name:t('menu.file.saveas'),
-        cmd:['ctrl','alt','s'],
+        cmd:['Ctrl','Alt','S'],
       },
       {
         key:'file.config',
@@ -44,17 +55,17 @@ const menus=[
       {
         key:'view.wysiwyg',
         name:t('menu.view.wysiwyg'),
-        cmd:[],
+        cmd:['Ctrl','Alt','7'],
       },
       {
         key:'view.ir',
         name:t('menu.view.ir'),
-        cmd:[],
+        cmd:['Ctrl','Alt','8'],
       },
       {
         key:'view.sv',
         name:t('menu.view.sv'),
-        cmd:[],
+        cmd:['Ctrl','Alt','9'],
       }
     ]
   },
@@ -63,13 +74,13 @@ const menus=[
     name:t('menu.help.name'),
     submenu:[
       {
-        key:'hellp.about',
+        key:'help.about',
         name:t('menu.help.about'),
         cmd:[],
       }
     ]
   }
-]
+]);
 
 const active=ref<string|null>(null);
 
@@ -78,29 +89,73 @@ const onClickMenu=(key:string)=>{
   emit('click',key);
 }
 
+const keydownMenu=(e:KeyboardEvent)=>{
+  console.log(e);
+  const isCtrl=e.ctrlKey;
+  const isAlt=e.altKey;
+  const code=e.code;
+  for(let i=0;i<menus.length;i++){
+    let menu=menus[i].submenu;
+    for(let k=menu.length-1;k>=0;k--){
+      let cmd=menu[k].cmd;
+      let exc=[];
+      for(let j=0;j<cmd.length;j++){
+        if(cmd[j]==='Alt'&&isAlt===true){
+          exc[j]=true;
+        }else if(exc&&cmd[j]==='Ctrl'&&isCtrl===true){
+          exc[j]=true;
+        }else if(`Key${cmd[j]}`===code){
+          exc[j]=true;
+        }else{
+          exc[j]=false;
+        }
+      }
+      let isExc=true;
+      exc.forEach(e=>{
+        if(e===false){
+          isExc=false;
+        }
+      })
+      if(exc.length>0&&isExc===true){
+        emit('click',menu[k].key);
+        return;
+      }
+    }
+  }
+}
+
+onMounted(()=>{
+  window.addEventListener('keydown',keydownMenu);
+})
+
+onBeforeUnmount(()=>{
+  window.removeEventListener('keydown',keydownMenu);
+})
+
 </script>
 <template>
-  <div class="menu-mesk" v-if="active!==null" @click="active=null">
-
-  </div>
-  <div class="menu-container">
-    <ul>
-      <li @click="active=item.key" v-for="item in menus" :key="item.key">
-        <span>{{ item.name }}</span>
-        <ul class="sub-menu" :class="{'active':active===item.key}" >
-          <li v-for="subitem in item.submenu" :key="item.key" @click.stop="onClickMenu(subitem.key)">
-            <span>{{ subitem.name }}</span>
-            <span class="cmd">{{ subitem.cmd.join('+') }}</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
+  <div>
+    <div class="menu-mesk" v-if="active!==null" @click="active=null"></div>
+    <div class="menu-container" :key="locale">
+      <ul>
+        <li @click="active=item.key" v-for="item in menus" :key="$t('menu.file.name')">
+          <span>{{ item.name }}</span>
+          <ul class="sub-menu" :class="{'active':active===item.key}" >
+            <li v-for="subitem in item.submenu" :key="item.key" @click.stop="onClickMenu(subitem.key)">
+              <span>{{ subitem.name }}</span>
+              <span class="cmd">{{ subitem.cmd.join('+') }}</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <style lang="scss">
 .menu-mesk{
   position: absolute;
   width: 100vw;
+  top: 30px;
   height: calc(100vh - 30px);
   z-index: 996;
   overflow: hidden;
@@ -109,6 +164,7 @@ const onClickMenu=(key:string)=>{
   position: absolute;
   top: 0;
   left: 0;
+  font-size: .9em;
  &>ul{
   list-style: none;
   padding: 0;
@@ -132,8 +188,9 @@ const onClickMenu=(key:string)=>{
     display: none;
     width: 12em;
     z-index: 997;
-    box-shadow: 0 0 5px #ccc;
+    box-shadow: 0 0 .6em #ccc;
     background-color: #fff;
+    border-radius: .3em;
     &.active{
       display: block;
     }
