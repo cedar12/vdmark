@@ -11,6 +11,8 @@ const en = {
   image:'image',
   theme:'theme',
   addr:'address',
+  counter:'counter',
+  comment:'comment',
   messages: {
     'setting': 'setting',
     'file': 'file',

@@ -62,8 +62,23 @@ pub fn update_picgo(path:&str)->PicGoResp{
 
   let response = client.post("http://127.0.0.1:36677/upload")
       .json(&json)
-      .send()
-      .unwrap();
-  let picgo_resp=response.json().unwrap();
-  picgo_resp
+      .send();
+  match response{
+    Ok(response)=>{
+      match response.json(){
+        Err(e)=>{
+          PicGoResp{
+            success:false,result:vec![format!("{:?}",e)]
+          }
+        },
+        Ok(json)=>json
+      }
+    },
+    Err(e)=>{
+      PicGoResp{
+        success:false,result:vec![format!("{:?}",e)]
+      }
+    }
+  }
 }
+

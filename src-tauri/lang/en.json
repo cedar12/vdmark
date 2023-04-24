@@ -15,8 +15,8 @@
     "view": {
       "name":"View",
       "wysiwyg":"WYSIWYG",
-      "ir":"IR",
-      "sv":"SV"
+      "ir":"Instant Rendering",
+      "sv":"Split View"
     }
 }
   

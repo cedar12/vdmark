@@ -1,13 +1,14 @@
 .titlebar-container{
   $height:30px;
-  $bg:#fff;
-  $hover:#ccc;
-
+  $bg:var(--backgroundColor);
+  $hover:var(--hoverBackgroundColor);
+  background-color: $bg;
   &>.drag-region{
     width: calc(100vw - 3 * $height);
     height: $height;
     z-index: 997;
     .file-name{
+      color: var(--textColor);
       position: absolute;
       width: 100vw;
       left: 0;
@@ -49,6 +50,7 @@
     right: 0;
     width: auto;
     z-index: 999;
+    color: var(--textColor);
     .titlebar-button {
       display: inline-flex;
       justify-content: center;

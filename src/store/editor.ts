@@ -30,7 +30,8 @@ interface EditorStore{
   /**
    * 模式
    */
-  mode:'wysiwyg'|'ir'|'sv'
+  mode:'wysiwyg'|'ir'|'sv',
+  
 }
 
 export const useEditorStore = defineStore('editor', {
@@ -44,6 +45,16 @@ export const useEditorStore = defineStore('editor', {
       mode:'ir',
      }
   },
+  persist: {
+		enabled: true,
+		strategies: [
+			{
+				key: 'RDmarkEditor',
+				storage: localStorage,
+        paths:['mode']
+			},
+		]
+	},
   actions: {
     async openPath(path:string){
       this.path=path;

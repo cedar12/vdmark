@@ -15,11 +15,15 @@ import { appWindow } from "@tauri-apps/api/window";
 import { UnlistenFn } from '@tauri-apps/api/event';
 import { invoke } from '@tauri-apps/api';
 import { readText } from '@tauri-apps/api/clipboard';
+import {useI18n} from 'vue-i18n';
+
+const {locale}=useI18n();
 
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
 const {value,isChanged,mode}=storeToRefs(editorStore);
+const {theme}=storeToRefs(appStore);
 
 watch(()=>editorStore.source,v=>{
   if(v){
@@ -32,11 +36,29 @@ watch(()=>mode.value,v=>{
   initEditor(value.value);
 })
 
+
+watch(()=>locale.value,v=>{
+  vditor.value?.destroy();
+  initEditor(value.value);
+})
+
+watch(()=>theme.value,(t:any)=>{
+  vditor.value?.setTheme(t);
+})
+
 const vditor = ref<Vditor | null>(null);
 
-const initEditor=(defaultValue:string|null)=>{
+const initEditor=async (defaultValue:string|null)=>{
+  let lang:any=locale.value==='en'?`${locale.value}_US`:`${locale.value}_CN`;
+  let editorTheme=theme.value;
+  if(!editorTheme){
+    let t=await appWindow.theme();
+    editorTheme=t==='light'?'classic':'dark';
+  }
   vditor.value = new Vditor('vditor', {
     mode: mode.value,
+    theme:editorTheme,
+    lang:lang,
     counter:{
       enable:true,
     },
@@ -105,11 +127,14 @@ const onDropFile=async ()=>{
     } else if (event.payload.type === 'drop') {
       console.log('User dropped', event.payload.paths);
       event.payload.paths.forEach(async (path)=>{
-        let ret:PicgoResp=await invoke('update_picgo',{path});
-        if(ret.success){
-          vditor.value?.insertValue(`![](${ret.result[0]})`,true);
+        if(path.toLowerCase().endsWith('.md')){
+          await editorStore.openPath(path);
+        }else if(path.toLowerCase().endsWith('.jpg')||path.toLowerCase().endsWith('.png'||path.toLowerCase().endsWith('gif')||path.toLowerCase().endsWith('ico'))){
+          let ret:PicgoResp=await invoke('update_picgo',{path});
+          if(ret.success){
+            vditor.value?.insertValue(`![](${ret.result[0]})`,true);
+          }
         }
-
       })
       
     } else {
@@ -127,6 +152,7 @@ const pasteFileEvent=async (e:KeyboardEvent)=>{
 };
 
 onMounted(() => {
+  document.body?.setAttribute('theme',theme.value||'');
   initEditor(editorStore.source);
   window.addEventListener('resize',resize);
   window.addEventListener('keydown',pasteFileEvent);
@@ -134,7 +160,9 @@ onMounted(() => {
 });
 
 onBeforeUnmount(()=>{
-  unlistenDropFileEvent();
+  if(unlistenDropFileEvent){
+    unlistenDropFileEvent();
+  }
   vditor.value?.destroy();
   window.removeEventListener('resize',resize);
   window.removeEventListener('keydown',pasteFileEvent);

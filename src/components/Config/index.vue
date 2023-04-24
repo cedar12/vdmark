@@ -19,14 +19,21 @@
                     <h2 id="editor">{{ $t('editor') }}</h2>
                     <label>{{$t('typewriterMode')}}</label>
                     <input type="checkbox" />
+                    <br/>
+                    <label>{{$t('counter')}}</label>
+                    <input type="checkbox" />
+                    <br/>
+                    <label>{{$t('comment')}}</label>
+                    <input type="checkbox" />
+                    <span class="tip">仅支持 wysiwyg 模式</span>
                 </div>
                 
                 <div>
                     <h2 id="theme">{{ $t('theme') }}</h2>
-                    <select name="" id="">
-                        <option>classic</option>
-                        <option>dark</option>
-                        <option>system</option>
+                    <select name="" id="" v-model="theme" @change="changeTheme">
+                        <option value="classic">classic</option>
+                        <option value="dark">dark</option>
+                        <!-- <option>system</option> -->
                     </select>
                 </div>
                 <div>
@@ -54,11 +61,12 @@ import {useAppStore} from '../../store/app';
 import {ref} from 'vue';
 import { useI18n } from "vue-i18n";
 import { invoke } from '@tauri-apps/api/tauri';
+import { appWindow } from '@tauri-apps/api/window';
 const { locale } = useI18n();
 
 const appStore=useAppStore();
 
-const {showConfig} = storeToRefs(appStore);
+const {showConfig,theme} = storeToRefs(appStore);
 
 const value=ref<string>('zh');
 
@@ -73,4 +81,15 @@ const switchLocale=(e:any)=>{
 }
 
 value.value=localStorage.getItem('lang')||'zh';
+
+
+const changeTheme=async ()=>{
+    if(theme.value){
+        document.body?.setAttribute('theme',theme.value||'');
+    }else{
+        const theme=await appWindow.theme() as any;
+        document.body?.setAttribute('theme',theme==='light'?'':theme);
+    }
+    
+}
 </script>

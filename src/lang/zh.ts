@@ -11,6 +11,8 @@ const zhCN = {
   image:'图片',
   theme:'主题',
   addr:'地址',
+  counter:'计数器',
+  comment:'评论模式',
   messages: {
     'setting': '设置',
     'file': '文件',

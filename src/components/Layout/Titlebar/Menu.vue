@@ -29,7 +29,7 @@ const menus=reactive<Array<MenuItem>>([
       {
         key:'file.open',
         name:t('menu.file.open'),
-        cmd:['Ctrl','O'],
+        cmd:['Ctrl','Shift','O'],
       },
       {
         key:'file.save',
@@ -90,9 +90,9 @@ const onClickMenu=(key:string)=>{
 }
 
 const keydownMenu=(e:KeyboardEvent)=>{
-  console.log(e);
   const isCtrl=e.ctrlKey;
   const isAlt=e.altKey;
+  const isShift=e.shiftKey;
   const code=e.code;
   for(let i=0;i<menus.length;i++){
     let menu=menus[i].submenu;
@@ -103,6 +103,8 @@ const keydownMenu=(e:KeyboardEvent)=>{
         if(cmd[j]==='Alt'&&isAlt===true){
           exc[j]=true;
         }else if(exc&&cmd[j]==='Ctrl'&&isCtrl===true){
+          exc[j]=true;
+        }else if(exc&&cmd[j]==='Shift'&&isShift===true){
           exc[j]=true;
         }else if(`Key${cmd[j]}`===code){
           exc[j]=true;
@@ -161,10 +163,12 @@ onBeforeUnmount(()=>{
   overflow: hidden;
 }
 .menu-container{
+  $menuShadowColor:var(--hoverBackgroundColor);
   position: absolute;
   top: 0;
   left: 0;
   font-size: .9em;
+  color: var(--textColor);
  &>ul{
   list-style: none;
   padding: 0;
@@ -186,10 +190,10 @@ onBeforeUnmount(()=>{
     margin: 0;
     position: absolute;
     display: none;
-    width: 12em;
+    width: 15em;
     z-index: 997;
-    box-shadow: 0 0 .6em #ccc;
-    background-color: #fff;
+    box-shadow: 0 0 .6em $menuShadowColor;
+    background-color: var(--backgroundColor);
     border-radius: .3em;
     &.active{
       display: block;
@@ -199,7 +203,12 @@ onBeforeUnmount(()=>{
       display: flex;
       justify-content: space-between;
       cursor: pointer;
+      span{
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
       .cmd{
+        font-size: .3em;
         color: rgb(133, 133, 133);
       }
     }

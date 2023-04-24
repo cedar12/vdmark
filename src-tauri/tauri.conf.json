@@ -42,7 +42,10 @@
         "icons/icon.ico"
       ],
       "identifier": "com.cedar12.rdmark",
-      "targets": "all"
+      "targets": "all",
+      "resources": [
+        "lang/*"
+      ]
     },
     "security": {
       "csp": null
@@ -57,7 +60,7 @@
         "title": "vdmark",
         "width": 800,
         "height": 600,
-        "decorations":true 
+        "decorations":false 
       }
     ]
   }

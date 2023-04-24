@@ -12,21 +12,12 @@
       <Pin></Pin>
     </div>
     <div class="titlebar-button" id="titlebar-minimize" @click="appWindow.minimize()">
-      <!-- <img
-        src="https://api.iconify.design/mdi:window-minimize.svg"
-        alt="minimize"
-      /> -->
       <Minus></Minus>
     </div>
     <div class="titlebar-button" id="titlebar-maximize" @click="appWindow.toggleMaximize()">
-      <!-- <img
-        src="https://api.iconify.design/mdi:window-maximize.svg"
-        alt="maximize"
-      /> -->
       <Browser></Browser>
     </div>
     <div class="titlebar-button" id="titlebar-close" @click="appWindow.close()">
-      <!-- <img src="https://api.iconify.design/mdi:close.svg" alt="close" /> -->
       <Close></Close>
     </div>
   </div>
@@ -49,8 +40,9 @@ import {Pin,Close,Minus,Browser} from '@icon-park/vue-next';
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
+
 const {fileName,path,isChanged,source,value,mode}=storeToRefs(editorStore);
-const {showConfig,pin,osType}=storeToRefs(appStore);
+const {showConfig,showAbout,pin,osType}=storeToRefs(appStore);
 
 const onPin=async ()=>{
   pin.value=!pin.value;
@@ -111,6 +103,7 @@ const newFile=async ()=>{
 }
 
 const onClickMenu=async (key:string)=>{
+  
   switch(key){
     case 'file.new':
       await newFile();
@@ -135,6 +128,9 @@ const onClickMenu=async (key:string)=>{
       break;
     case 'view.sv':
       mode.value='sv';
+      break;
+    case 'help.about':
+      showAbout.value=!showAbout.value;
       break;
   }
 }

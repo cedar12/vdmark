@@ -1,0 +1,49 @@
+.about-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 994;
+    .dialog{
+        width: 40%;
+        height: 40%;
+        max-width: 260px;
+        max-height: 250px;
+        z-index: 997;
+        background-color: var(--backgroundColor);
+        border: .1em solid var(--hoverBackgroundColor);
+        box-shadow: 0 0 20px var(--hoverBackgroundColor);
+        border-radius: 5px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        h1{
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            color: var(--textColor);
+            img{
+                padding-right: .3em;
+            }
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li{
+                color: var(--textColor);
+                font-size: .3em;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                a{
+                    color: rgb(56, 56, 255);
+                }
+            }
+        }
+    }
+}
