@@ -22,7 +22,7 @@ const {locale}=useI18n();
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
-const {value,isChanged,mode}=storeToRefs(editorStore);
+const {value,isChanged,mode,typewriteEnable}=storeToRefs(editorStore);
 const {theme}=storeToRefs(appStore);
 
 watch(()=>editorStore.source,v=>{
@@ -38,6 +38,10 @@ watch(()=>mode.value,v=>{
 
 
 watch(()=>locale.value,v=>{
+  vditor.value?.destroy();
+  initEditor(value.value);
+})
+watch(()=>typewriteEnable.value,v=>{
   vditor.value?.destroy();
   initEditor(value.value);
 })
@@ -58,6 +62,7 @@ const initEditor=async (defaultValue:string|null)=>{
   vditor.value = new Vditor('vditor', {
     mode: mode.value,
     theme:editorTheme,
+    typewriterMode:typewriteEnable.value,
     lang:lang,
     counter:{
       enable:true,

@@ -18,7 +18,7 @@
                 <div>
                     <h2 id="editor">{{ $t('editor') }}</h2>
                     <label>{{$t('typewriterMode')}}</label>
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="typewriteEnable"/>
                     <br/>
                     <label>{{$t('counter')}}</label>
                     <input type="checkbox" />
@@ -58,6 +58,7 @@
 import './index.scss';
 import {storeToRefs} from 'pinia';
 import {useAppStore} from '../../store/app';
+import {useEditorStore} from '../../store/editor';
 import {ref} from 'vue';
 import { useI18n } from "vue-i18n";
 import { invoke } from '@tauri-apps/api/tauri';
@@ -65,8 +66,10 @@ import { appWindow } from '@tauri-apps/api/window';
 const { locale } = useI18n();
 
 const appStore=useAppStore();
+const editorStore=useEditorStore();
 
 const {showConfig,theme} = storeToRefs(appStore);
+const {typewriteEnable} = storeToRefs(editorStore);
 
 const value=ref<string>('zh');
 

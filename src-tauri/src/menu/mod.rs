@@ -18,12 +18,21 @@ pub fn create_menu(lang:String)->Menu{
     let view_ir = CustomMenuItem::new("view.ir".to_string(), locale.view.ir);
     let view_sv = CustomMenuItem::new("view.sv".to_string(), locale.view.sv);
     let view = Submenu::new(locale.view.name, Menu::new().add_item(view_wysiwgy).add_item(view_ir).add_item(view_sv));
+
+    let view_about = CustomMenuItem::new("help.about".to_string(), locale.help.about);
+    let help = Submenu::new(locale.help.name, Menu::new().add_item(view_about));
     
     let menu = Menu::new()
     .add_native_item(MenuItem::Copy)
+    .add_native_item(MenuItem::Cut)
+    .add_native_item(MenuItem::Paste)
+    .add_native_item(MenuItem::Redo)
+    .add_native_item(MenuItem::Undo)
+    .add_native_item(MenuItem::SelectAll)
     .add_item(CustomMenuItem::new("hide", "Hide"))
     .add_submenu(file)
-    .add_submenu(view);
+    .add_submenu(view)
+    .add_submenu(help);
     menu
 }
 

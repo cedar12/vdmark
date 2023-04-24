@@ -31,6 +31,10 @@ interface EditorStore{
    * 模式
    */
   mode:'wysiwyg'|'ir'|'sv',
+  /**
+   * 启用打字机模式
+   */
+  typewriteEnable:boolean,
   
 }
 
@@ -43,6 +47,7 @@ export const useEditorStore = defineStore('editor', {
       value:null,
       isChanged:false,
       mode:'ir',
+      typewriteEnable:false,
      }
   },
   persist: {
@@ -51,7 +56,7 @@ export const useEditorStore = defineStore('editor', {
 			{
 				key: 'RDmarkEditor',
 				storage: localStorage,
-        paths:['mode']
+        paths:['mode','typewriteEnable']
 			},
 		]
 	},
