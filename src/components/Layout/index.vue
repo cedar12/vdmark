@@ -5,8 +5,8 @@
       <Workspace v-if="showWorkspace"></Workspace>
       <slot></slot>
     </div>
-    <Config v-if="showConfig"/> 
-    <About v-if="showAbout"/> 
+    <Config v-if="showConfig"></Config>
+    <About v-if="showAbout"></About> 
   </div>
 </template>
 <script setup lang="ts">
