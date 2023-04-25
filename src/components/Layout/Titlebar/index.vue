@@ -36,7 +36,9 @@ import { emit, listen, UnlistenFn } from '@tauri-apps/api/event';
 import { useAppStore } from '../../../store/app';
 import { onBeforeUnmount, onMounted } from 'vue';
 import {Pin,Close,Minus,Browser} from '@icon-park/vue-next';
+import {useI18n} from 'vue-i18n';
 
+const {t} = useI18n();
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
@@ -83,7 +85,7 @@ const saveAsFile=async (isNew:boolean|undefined)=>{
       name: 'Markdown',
       extensions: ['md']
     }],
-    title:isNew?'新建':'另存为'
+    title:isNew?t('menu.file.new'):t('menu.file.saveas')
   });
   if(filePath){
     let err:string=await invoke('save_file',{path:filePath,content:editorStore.value});
@@ -128,6 +130,9 @@ const onClickMenu=async (key:string)=>{
       break;
     case 'view.sv':
       mode.value='sv';
+      break;
+    case 'view.top':
+      await onPin();
       break;
     case 'help.about':
       showAbout.value=!showAbout.value;

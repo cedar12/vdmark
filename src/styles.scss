@@ -2,23 +2,31 @@ body{
   padding: 0;
   margin: 0;
   --titlebarHeight:30px;
+  --docListWidth:150px;
 }
 
 body{
   --textColor:rgb(26, 25, 25);
   --backgroundColor: #fff;
   --hoverBackgroundColor: #ccc;
-
+  --backgroundColor2: #f6f8fa;
   background-color: var(--backgroundColor);
 }
 body[theme='dark']{
   --textColor:#ccc;
   --backgroundColor: #24292e;
   --hoverBackgroundColor: #18191a;
-
+  --backgroundColor2: #1d2125;
   background-color: var(--backgroundColor);
   .vditor-reset{
     color: var(--textColor);
+    table{
+      td,th {
+        border-color: var(--hoverBackgroundColor);
+        background-color: var(--backgroundColor);
+      }
+    }
+    
   }
 
 }
@@ -27,10 +35,12 @@ body[theme='dark']{
   color: transparent;
   border-left: .1em solid rgba(124, 124, 124, 0.473);
   cursor: pointer;
+  width:10px;
 }
 ::-webkit-scrollbar-thumb{
   background-color: rgba(122, 122, 122, 0.212);
-  
+  cursor: pointer;
+  width:10px;
 }
 
 #app{

@@ -17,18 +17,21 @@ import { invoke } from '@tauri-apps/api';
 import { readText } from '@tauri-apps/api/clipboard';
 import {useI18n} from 'vue-i18n';
 
-const {locale}=useI18n();
+const {locale,t}=useI18n();
 
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
-const {value,isChanged,mode,typewriteEnable}=storeToRefs(editorStore);
-const {theme}=storeToRefs(appStore);
+const {value,isChanged,mode,typewriteEnable,counterEnable}=storeToRefs(editorStore);
+const {theme,showWorkspace}=storeToRefs(appStore);
 
 watch(()=>editorStore.source,v=>{
-  if(v){
-    vditor.value?.setValue(v);
-  }
+  // if(v){
+  //   // vditor.value?.setValue(v);
+    
+  // }
+  vditor.value?.destroy();
+  initEditor(value.value);
 })
 
 watch(()=>mode.value,v=>{
@@ -45,12 +48,45 @@ watch(()=>typewriteEnable.value,v=>{
   vditor.value?.destroy();
   initEditor(value.value);
 })
+watch(()=>counterEnable.value,v=>{
+  vditor.value?.destroy();
+  initEditor(value.value);
+})
 
 watch(()=>theme.value,(t:any)=>{
   vditor.value?.setTheme(t);
 })
 
 const vditor = ref<Vditor | null>(null);
+
+const toolbar=[
+{
+      hotkey: '⇧⌘F',
+      name: 'doc-list',
+      tipPosition: 'ne',
+      tip: t('docList'),
+      className: 'right',
+      icon: '<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 4H6V14H42V4Z" fill="none"  stroke-width="4" stroke-linejoin="round"/><path d="M42 19H6V29H42V19Z" fill="none"  stroke-width="4" stroke-linejoin="round"/><path d="M42 34H6V44H42V34Z" fill="none"  stroke-width="4" stroke-linejoin="round"/><path d="M21 9H27"  stroke-width="4" stroke-linecap="round"/><path d="M21 24H27"  stroke-width="4" stroke-linecap="round"/><path d="M21 39H27"  stroke-width="4" stroke-linecap="round"/></svg>',
+      click () {
+        showWorkspace.value=!showWorkspace.value;
+      },
+    },
+'headings','bold' , 'italic' , 'strike'  , 'line' , 'quote'  , 'check', 'link' , 'table' , '|','indent','outdent'  , 'insert-after' , 'insert-before', 'outline' ,
+{
+  name: 'more',
+  toolbar: [
+    'undo' , 'redo'  ,
+    'emoji',
+    'list' , 'ordered-list',
+    'code' , 'inline-code',
+    'edit-mode',
+    'both',
+    'fullscreen',
+    'preview',
+    'help',
+  ],
+},
+]
 
 const initEditor=async (defaultValue:string|null)=>{
   let lang:any=locale.value==='en'?`${locale.value}_US`:`${locale.value}_CN`;
@@ -65,7 +101,7 @@ const initEditor=async (defaultValue:string|null)=>{
     typewriterMode:typewriteEnable.value,
     lang:lang,
     counter:{
-      enable:true,
+      enable:counterEnable.value,
     },
     height:window.innerHeight-(appStore.osType==='Windows_NT'?30:0),
     input:(v)=>{
@@ -76,10 +112,11 @@ const initEditor=async (defaultValue:string|null)=>{
       hide:false,
       pin:false
     },
-    toolbar: ['emoji','headings','bold' , 'italic' , 'strike' , '|' , 'line' , 'quote' , 'list' , 'ordered-list' , 'check' ,'outdent' ,'indent' , 'code' , 'inline-code' , 'insert-after' , 'insert-before' ,'undo' , 'redo'  , 'link' , 'table', 'edit-mode' ,'both' , 'preview'  , 'outline' , 'br'],
+    toolbar: toolbar,
+    value:defaultValue||'',
     after: () => {
       // vditor.value is a instance of Vditor now and thus can be safely used here
-      vditor.value!.setValue(defaultValue||'');
+      // vditor.value!.setValue(defaultValue||'');
       // const toolbar=vditor.value?.vditor.toolbar;
       // const pin=toolbar?.element;
       // if(pin){
@@ -92,7 +129,7 @@ const initEditor=async (defaultValue:string|null)=>{
     link:{
       isOpen:false,
       click:(bom)=>{
-        console.log(bom);
+        // console.log(bom);
         const href=bom.textContent?.valueOf();
         if(href){
           if(!href.startsWith('#')){

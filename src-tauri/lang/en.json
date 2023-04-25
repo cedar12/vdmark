@@ -16,7 +16,8 @@
       "name":"View",
       "wysiwyg":"WYSIWYG",
       "ir":"Instant Rendering",
-      "sv":"Split View"
+      "sv":"Split View",
+      "top":"Always On Top"
     }
 }
   

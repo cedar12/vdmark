@@ -33,6 +33,7 @@ pub struct View{
     pub wysiwyg:String,
     pub  ir:String,
     pub  sv:String,
+    pub top:String,
 }
 
 const LANG_DIR:&str="lang";

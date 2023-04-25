@@ -15,9 +15,9 @@ document.onkeydown = function (event: any) {
         event.keyCode = 0
         event.returnValue = false
     }
-    if (winEvent && winEvent.keyCode == 13) {
-        winEvent.keyCode = 505
-    }
+    // if (winEvent && winEvent.keyCode == 13) {
+    //     winEvent.keyCode = 505
+    // }
 }
  
 //屏蔽右键菜单

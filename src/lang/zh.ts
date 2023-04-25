@@ -8,11 +8,13 @@ const zhCN = {
   editor:'编辑器',
   typewriterMode:'打字机模式',
   lang:'语言',
+  langTip:'重启生效',
   image:'图片',
   theme:'主题',
   addr:'地址',
   counter:'计数器',
   comment:'评论模式',
+  docList:'文档列表',
   messages: {
     'setting': '设置',
     'file': '文件',

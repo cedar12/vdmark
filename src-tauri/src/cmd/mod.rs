@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use reqwest::blocking::Client;
 use tauri::{Window};
 
-use crate::lang::Lang;
+use crate::{lang::Lang, db};
 
 
 #[tauri::command]
@@ -33,9 +33,9 @@ pub fn save_file(path:String,content:String)->Option<String>{
 #[tauri::command]
 pub fn update_menu_lang(window:Window,lang:String){
   eprintln!("update_lang {}",lang);
-  
-  let menu_handle=window.menu_handle();
-  crate::menu::update_menu(lang, menu_handle);
+  db::set_conf("lang".into(),lang.clone());
+  //let menu_handle=window.menu_handle();
+  //crate::menu::update_menu(lang, menu_handle);
 }
 
 #[tauri::command]
@@ -59,8 +59,8 @@ pub fn update_picgo(path:&str)->PicGoResp{
   let client = Client::new();
   let mut json=HashMap::new();
   json.insert("list", vec![path]);
-
-  let response = client.post("http://127.0.0.1:36677/upload")
+  let server=db::get_conf_default("picgo".into(), "127.0.0.1:36677".into());
+  let response = client.post(format!("http://{}/upload",server))
       .json(&json)
       .send();
   match response{
@@ -82,3 +82,8 @@ pub fn update_picgo(path:&str)->PicGoResp{
   }
 }
 
+
+#[tauri::command]
+pub fn set_picgo_server(server:String){
+  db::set_conf("picgo".into(),server);
+}

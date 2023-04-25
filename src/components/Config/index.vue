@@ -21,7 +21,7 @@
                     <input type="checkbox" v-model="typewriteEnable"/>
                     <br/>
                     <label>{{$t('counter')}}</label>
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="counterEnable"/>
                     <br/>
                     <label>{{$t('comment')}}</label>
                     <input type="checkbox" />
@@ -42,6 +42,7 @@
                         <option value="zh">中文</option>
                         <option value="en">English</option>
                     </select>
+                    <span class="tip" style="cursor: pointer;" @click="onRelaunch">{{$t('langTip')}}</span>
                 </div>
                 <div>
                     <h2 id="image">{{ $t('image') }}</h2>
@@ -63,13 +64,15 @@ import {ref} from 'vue';
 import { useI18n } from "vue-i18n";
 import { invoke } from '@tauri-apps/api/tauri';
 import { appWindow } from '@tauri-apps/api/window';
+import { relaunch } from '@tauri-apps/api/process';
+import { confirm } from '@tauri-apps/api/dialog';
 const { locale } = useI18n();
 
 const appStore=useAppStore();
 const editorStore=useEditorStore();
 
 const {showConfig,theme} = storeToRefs(appStore);
-const {typewriteEnable} = storeToRefs(editorStore);
+const {typewriteEnable,counterEnable} = storeToRefs(editorStore);
 
 const value=ref<string>('zh');
 
@@ -78,13 +81,20 @@ const switchLocale=(e:any)=>{
   locale.value = lang;
   localStorage.setItem("lang", lang);
   value.value=lang;
-  if(appStore.osType!=='Windows_NT'){
+  //if(appStore.osType!=='Windows_NT'){
     invoke('update_menu_lang',{lang:lang});
-  }
+  //}
 }
 
 value.value=localStorage.getItem('lang')||'zh';
 
+const onRelaunch=async ()=>{
+    const confirmed = await confirm('是否重启应用?', '重启rdmark');
+    if(confirmed){
+        await relaunch();
+    }
+    
+}
 
 const changeTheme=async ()=>{
     if(theme.value){

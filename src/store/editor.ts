@@ -5,6 +5,14 @@ import { appWindow } from '@tauri-apps/api/window';
 
 const osType = await type();
 
+
+interface Path{
+  path:string,
+  fileName:string,
+  openTime:string,
+}
+
+
 interface EditorStore{
   /**
    * 文件路径
@@ -35,6 +43,11 @@ interface EditorStore{
    * 启用打字机模式
    */
   typewriteEnable:boolean,
+  /**
+   *  启用计数器
+   */
+  counterEnable:boolean,
+  paths:Array<Path>,
   
 }
 
@@ -48,6 +61,8 @@ export const useEditorStore = defineStore('editor', {
       isChanged:false,
       mode:'ir',
       typewriteEnable:false,
+      counterEnable:true,
+      paths:[],
      }
   },
   persist: {
@@ -56,7 +71,7 @@ export const useEditorStore = defineStore('editor', {
 			{
 				key: 'RDmarkEditor',
 				storage: localStorage,
-        paths:['mode','typewriteEnable']
+        // paths:['mode','typewriteEnable','paths']
 			},
 		]
 	},
@@ -70,11 +85,22 @@ export const useEditorStore = defineStore('editor', {
 
         this.fileName=path.substr(obj+1);
         appWindow.setTitle(this.fileName);
+        this.addPath({
+          path:path,
+          fileName:this.fileName,
+          openTime:new Date().toLocaleString(),
+        })
         const content:string = await invoke("read_file", {path});
         this.source=content;
         this.value=content;
         this.isChanged=false;
       }
+    },
+    addPath(path:Path){
+      const newPaths=this.paths.filter(p=>path.path!==p.path);
+      newPaths.unshift(path);
+      console.log(newPaths);
+      this.paths=newPaths;
     }
   },
 })

@@ -30,6 +30,12 @@
         "all": false,
         "readText": true,
         "writeText": false
+      },
+      "process": {
+        "all": false,
+        "exit": false,
+        "relaunch": true,
+        "relaunchDangerousAllowSymlinkMacos": false
       }
     },
     "bundle": {
@@ -44,7 +50,8 @@
       "identifier": "com.cedar12.rdmark",
       "targets": "all",
       "resources": [
-        "lang/*"
+        "lang/*",
+        "example/*"
       ]
     },
     "security": {
@@ -60,7 +67,7 @@
         "title": "vdmark",
         "width": 800,
         "height": 600,
-        "decorations":false 
+        "decorations":false
       }
     ]
   }

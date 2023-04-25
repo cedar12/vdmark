@@ -9,7 +9,7 @@
         <li>build time: {{ new Date(state.buildTime).toLocaleString() }}</li>
         <li>author: cedar12.zxd@qq.com</li>
         <li>license: MIT</li>
-        <li>source: <a :href="sourceHref" @click="toSource">{{ sourceHref }}</a></li>
+        <li>source: <a :href="sourceHref" @click="toSource">cedar12/rdmark</a></li>
       </ul>
     </div>
   </div>

@@ -17,7 +17,8 @@ pub fn create_menu(lang:String)->Menu{
     let view_wysiwgy = CustomMenuItem::new("view.wysiwyg".to_string(), locale.view.wysiwyg);
     let view_ir = CustomMenuItem::new("view.ir".to_string(), locale.view.ir);
     let view_sv = CustomMenuItem::new("view.sv".to_string(), locale.view.sv);
-    let view = Submenu::new(locale.view.name, Menu::new().add_item(view_wysiwgy).add_item(view_ir).add_item(view_sv));
+    let view_top = CustomMenuItem::new("view.top".to_string(), locale.view.top);
+    let view = Submenu::new(locale.view.name, Menu::new().add_item(view_wysiwgy).add_item(view_ir).add_item(view_sv).add_item(view_top));
 
     let view_about = CustomMenuItem::new("help.about".to_string(), locale.help.about);
     let help = Submenu::new(locale.help.name, Menu::new().add_item(view_about));
