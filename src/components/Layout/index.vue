@@ -17,7 +17,7 @@ import Workspace from '../Workspace/index.vue';
 import {useAppStore} from '../../store/app';
 import {storeToRefs} from 'pinia';
 import { type } from '@tauri-apps/api/os';
-import {onMounted, ref} from 'vue';
+import {onMounted} from 'vue';
 
 const appStore=useAppStore();
 const {showConfig,showAbout,showWorkspace,osType} = storeToRefs(appStore);
