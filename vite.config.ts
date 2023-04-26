@@ -14,10 +14,6 @@ export default defineConfig(async () => ({
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
   clearScreen: false,
-  define:{
-    '__PACKAGE_VERSION__': JSON.stringify(process.env.npm_package_version),
-    '__BUILD_TIME__': Date.now(),
-  },
   // tauri expects a fixed port, fail if that port is not available
   server: {
     port: 1420,
