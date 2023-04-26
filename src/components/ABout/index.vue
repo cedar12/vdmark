@@ -76,7 +76,6 @@ const state:{
 })
 
 onMounted(async () => {
-  state.appName = await getName();
   state.tauriVersion = await getTauriVersion();
   state.version = await getVersion();
   const builds: BuildInfo = await invoke('build_info');
