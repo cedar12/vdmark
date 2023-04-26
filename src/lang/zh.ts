@@ -15,6 +15,14 @@ const zhCN = {
   counter:'计数器',
   comment:'评论模式',
   docList:'文档列表',
+  autoSave:'自动保存',
+  noSaveTip:'未保存，是否放弃保存?',
+  tip:'提示',
+  codeBlock:{
+    name:'代码块',
+    enable:'高亮',
+    lineNumber:'行号',
+  },
   messages: {
     'setting': '设置',
     'file': '文件',

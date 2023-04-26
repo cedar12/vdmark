@@ -1,4 +1,4 @@
-RDmark 是一款**所见即所得**编辑器，支持 *Markdown*。
+VDmark 是一款**所见即所得**编辑器，支持 *Markdown*。
 
 * 不熟悉 Markdown 可使用工具栏或快捷键进行排版
 * 熟悉 Markdown 可直接排版，也可切换为分屏预览
@@ -19,7 +19,7 @@ RDmark 是一款**所见即所得**编辑器，支持 *Markdown*。
 - *倾斜* - `*倾斜*`
 - ~~删除线~~ - `~~删除线~~`
 - `Code 标记` - `` `Code 标记` ``
-- [超级链接](https://github.com/cedar/rdmark) - `[超级链接](https://ld246.com)`
+- [超级链接](https://github.com/cedar/vdmark) - `[超级链接](https://github.com/cedar/vdmark)`
 - [username@gmail.com](mailto:username@gmail.com) - `[username@gmail.com](mailto:username@gmail.com)`
 
 ### 提及用户
@@ -161,12 +161,12 @@ public class HelloWorld {
 
 ### 链接引用
 
-[链接文本][链接标识]https://b3log.org
+[链接文本][链接标识]https://github.com/cedar12/vdmark
 
 ```
 [链接文本][链接标识]
 
-[链接标识]: https://b3log.org
+[链接标识]: https://github.com/cedar12/vdmark
 ```
 
 ### 数学公式
@@ -373,12 +373,10 @@ https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
     可以使用代码块。
     ```
 
-    还有其他行级排版语法，比如**加粗**和[链接](https://b3log.org)。
+    还有其他行级排版语法，比如**加粗**和[链接](https://github.com/cedar12/vdmark)。
 ```
 
 ## 快捷键
-
-
 
 ### 通用
 
@@ -486,4 +484,4 @@ https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html
     可以使用代码块。
     ```
     
-    还有其他行级排版语法，比如**加粗**和[链接](https://b3log.org)。
+    还有其他行级排版语法，比如**加粗**和[链接](https://github.com/cedar12/vdmark)。

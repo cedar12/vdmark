@@ -47,8 +47,10 @@ interface EditorStore{
    *  启用计数器
    */
   counterEnable:boolean,
+  codeBlockEnable:boolean,
+  lineNumberEnable:boolean,
   paths:Array<Path>,
-  
+  autoSaveEnable:boolean,
 }
 
 export const useEditorStore = defineStore('editor', {
@@ -62,7 +64,10 @@ export const useEditorStore = defineStore('editor', {
       mode:'ir',
       typewriteEnable:false,
       counterEnable:true,
+      codeBlockEnable:true,
+      lineNumberEnable:false,
       paths:[],
+      autoSaveEnable:false,
      }
   },
   persist: {
@@ -90,10 +95,15 @@ export const useEditorStore = defineStore('editor', {
           fileName:this.fileName,
           openTime:new Date().toLocaleString(),
         })
-        const content:string = await invoke("read_file", {path});
-        this.source=content;
-        this.value=content;
-        this.isChanged=false;
+        try{
+          const content:string = await invoke("read_file", {path});
+          this.source=content;
+          this.value=content;
+          this.isChanged=false;
+        }catch(e){
+          console.error(e);
+        }
+        
       }
     },
     addPath(path:Path){

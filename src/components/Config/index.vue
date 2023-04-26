@@ -6,6 +6,9 @@
                     <a href="#editor">{{ $t('editor') }}</a>
                 </div>
                 <div class="outline-item">
+                    <a href="#codeBlock">{{ $t('codeBlock.name') }}</a>
+                </div>
+                <div class="outline-item">
                     <a href="#theme">{{ $t('theme') }}</a>
                 </div>
                 <div  class="outline-item">
@@ -16,7 +19,11 @@
             <div class="content">
 
                 <div>
+                    
                     <h2 id="editor">{{ $t('editor') }}</h2>
+                    <label>{{$t('autoSave')}}</label>
+                    <input type="checkbox" v-model="autoSaveEnable"/>
+                    <br/>
                     <label>{{$t('typewriterMode')}}</label>
                     <input type="checkbox" v-model="typewriteEnable"/>
                     <br/>
@@ -26,6 +33,19 @@
                     <label>{{$t('comment')}}</label>
                     <input type="checkbox" />
                     <span class="tip">仅支持 wysiwyg 模式</span>
+                </div>
+
+                <div>
+                    <h2 id="codeBlock">{{ $t('codeBlock.name') }}</h2>
+                    <label>{{$t('codeBlock.enable')}}</label>
+                    <input type="checkbox" v-model="codeBlockEnable"/>
+                    <br/>
+                    <label>{{$t('codeBlock.lineNumber')}}</label>
+                    <input type="checkbox" v-model="lineNumberEnable"/>
+                    <br/>
+                    <!-- <select name="" id="" >
+                        <option>system</option>
+                    </select> -->
                 </div>
                 
                 <div>
@@ -72,7 +92,7 @@ const appStore=useAppStore();
 const editorStore=useEditorStore();
 
 const {showConfig,theme} = storeToRefs(appStore);
-const {typewriteEnable,counterEnable} = storeToRefs(editorStore);
+const {typewriteEnable,counterEnable,codeBlockEnable,lineNumberEnable,autoSaveEnable} = storeToRefs(editorStore);
 
 const value=ref<string>('zh');
 

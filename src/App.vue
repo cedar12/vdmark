@@ -12,18 +12,20 @@ import { useI18n } from 'vue-i18n';
 
 const {locale} = useI18n();
 
+
+
 // 禁止右键和检查
 //禁止F12
-document.onkeydown = function (event: any) {
-    var winEvent: any = window.event
-    if (winEvent && winEvent.keyCode == 123) {
-        event.keyCode = 0
-        event.returnValue = false
-    }
-    // if (winEvent && winEvent.keyCode == 13) {
-    //     winEvent.keyCode = 505
-    // }
-}
+// document.onkeydown = function (event: any) {
+//     var winEvent: any = window.event
+//     if (winEvent && winEvent.keyCode == 123) {
+//         event.keyCode = 0
+//         event.returnValue = false
+//     }
+//     // if (winEvent && winEvent.keyCode == 13) {
+//     //     winEvent.keyCode = 505
+//     // }
+// }
 
 listen('lang',e=>{
     console.log('lang',e);

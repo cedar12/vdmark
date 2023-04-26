@@ -15,6 +15,14 @@ const en = {
   counter:'Counter',
   comment:'Comment',
   docList:'Document List',
+  autoSave:'Auto Save',
+  noSaveTip:'Give up to save?',
+  tip:'tip',
+  codeBlock:{
+    name:'Code Block',
+    enable:'Code Highlighting',
+    lineNumber:'Line Number',
+  },
   messages: {
     'setting': 'setting',
     'file': 'file',

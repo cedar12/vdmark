@@ -1,6 +1,6 @@
-# RDmark
+# vdmark
 
-[RDmark](https://github.com/cedar12/rdmark)是一款桌面端的Markdown编辑器和阅读器，支持所见即所得、即时渲染（类似 Typora）和分屏预览模式。
+[vdmark](https://github.com/cedar12/vdmark)是一款桌面端的Markdown编辑器和阅读器，支持所见即所得、即时渲染（类似 Typora）和分屏预览模式。
 
 ---
 
@@ -15,10 +15,15 @@
 * 多语言支持，内置中、英文本地化
 * 支持classic、dark主题
 * 可使用拖拽Markdown文档到窗口快速打开
+* 支持自动保存
+* 支持置顶窗口
+* Markdown文档打开记录列表
 
 # 界面
 
-![](https://cdn.jsdelivr.net/gh/cedar12/picgo@main/images/rdmark.jpg)
+![](https://cdn.jsdelivr.net/gh/cedar12/picgo@main/images/vdmark.jpg)
+
+![](https://cdn.jsdelivr.net/gh/cedar12/picgo@main/images/vdmarkdark.jpg)
 
 ---
 

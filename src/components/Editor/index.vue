@@ -16,13 +16,14 @@ import { UnlistenFn } from '@tauri-apps/api/event';
 import { invoke } from '@tauri-apps/api';
 import { readText } from '@tauri-apps/api/clipboard';
 import {useI18n} from 'vue-i18n';
+import { debounce } from '../../utils';
 
 const {locale,t}=useI18n();
 
 const editorStore=useEditorStore();
 const appStore=useAppStore();
 
-const {value,isChanged,mode,typewriteEnable,counterEnable}=storeToRefs(editorStore);
+const {value,isChanged,mode,typewriteEnable,counterEnable,lineNumberEnable,codeBlockEnable}=storeToRefs(editorStore);
 const {theme,showWorkspace}=storeToRefs(appStore);
 
 watch(()=>editorStore.source,v=>{
@@ -49,6 +50,14 @@ watch(()=>typewriteEnable.value,v=>{
   initEditor(value.value);
 })
 watch(()=>counterEnable.value,v=>{
+  vditor.value?.destroy();
+  initEditor(value.value);
+})
+watch(()=>lineNumberEnable.value,v=>{
+  vditor.value?.destroy();
+  initEditor(value.value);
+})
+watch(()=>codeBlockEnable.value,v=>{
   vditor.value?.destroy();
   initEditor(value.value);
 })
@@ -104,10 +113,29 @@ const initEditor=async (defaultValue:string|null)=>{
     counter:{
       enable:counterEnable.value,
     },
+    preview:{
+      hljs:{
+        enable:codeBlockEnable.value,
+        lineNumber:lineNumberEnable.value,
+      }
+    },
     height:window.innerHeight-(appStore.osType==='Windows_NT'?30:0),
     input:(v)=>{
       value.value=v;
       isChanged.value=true;
+      
+      if(editorStore.autoSaveEnable){
+        debounce(async ()=>{
+          if(editorStore.path){
+            let err:string=await invoke('save_file',{path:editorStore.path,content:editorStore.value});
+            if(!err){
+              isChanged.value=false;
+            }else{
+              console.error(err);
+            }
+          }
+        },1000)();
+      }
     },
     toolbarConfig:{
       hide:false,
@@ -152,10 +180,10 @@ const initEditor=async (defaultValue:string|null)=>{
 
 
 const resize=()=>{
-  setTimeout(()=>{
-    vditor.value?.destroy();
-    initEditor(value.value);
-  },300);
+    let vd=document.getElementById('vditor');
+    if(vd){
+      vd.style.height=`${window.innerHeight-(appStore.osType==='Windows_NT'?30:0)}px`;
+    }
 }
 
 

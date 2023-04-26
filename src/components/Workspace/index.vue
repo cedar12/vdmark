@@ -15,6 +15,10 @@
 import { useEditorStore } from '../../store/editor';
 import {storeToRefs} from 'pinia';
 import {ref,watch} from 'vue';
+import { dialog } from '@tauri-apps/api';
+import {useI18n} from 'vue-i18n';
+
+const {t} = useI18n();
 
 const editorStore=useEditorStore();
 const {paths}=storeToRefs(editorStore);
@@ -26,7 +30,13 @@ watch(()=>paths.value,(v)=>{
   list.value=v;
 })
 
-const openPath=(path:string)=>{
+const openPath=async (path:string)=>{
+  if(editorStore.isChanged){
+    const c=await dialog.confirm(editorStore.fileName+t('noSaveTip'),t('tip'));
+    if(!c){
+      return;
+    }
+  }
   editorStore.openPath(path);
 }
 
@@ -76,7 +86,7 @@ const onSearch=()=>{
         color: var(--textColor);
       }
       .item-content{
-        font-size: 14px;
+        font-size: 12px;
         color: darken(rgb(131, 131, 131),10%);
       }
       &:hover{

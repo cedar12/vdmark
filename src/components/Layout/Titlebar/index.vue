@@ -37,6 +37,7 @@ import { useAppStore } from '../../../store/app';
 import { onBeforeUnmount, onMounted } from 'vue';
 import {Pin,Close,Minus,Browser} from '@icon-park/vue-next';
 import {useI18n} from 'vue-i18n';
+import { dialog } from '@tauri-apps/api';
 
 const {t} = useI18n();
 const editorStore=useEditorStore();
@@ -87,8 +88,9 @@ const saveAsFile=async (isNew:boolean|undefined)=>{
     }],
     title:isNew?t('menu.file.new'):t('menu.file.saveas')
   });
+  console.log(filePath);
   if(filePath){
-    let err:string=await invoke('save_file',{path:filePath,content:editorStore.value});
+    let err:string=await invoke('save_file',{path:filePath,content:editorStore.value||''});
     if(!err){
       isChanged.value=false;
       editorStore.openPath(filePath);
@@ -99,6 +101,12 @@ const saveAsFile=async (isNew:boolean|undefined)=>{
   
 }
 const newFile=async ()=>{
+  if(editorStore.isChanged){
+    const c=await dialog.confirm(editorStore.fileName+t('noSaveTip'),t('tip'));
+    if(!c){
+      return;
+    }
+  }
   source.value=null;
   value.value=null;
   await saveAsFile(true);
