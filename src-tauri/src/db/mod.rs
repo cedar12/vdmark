@@ -1,6 +1,8 @@
 use rusqlite::{Connection, Result};
 use std::sync::{Arc,Mutex};
 
+use crate::utils;
+
 lazy_static! {
   static ref CONN:Arc<Mutex<Option<Connection>>>=Arc::new(Mutex::new(None));
 }
@@ -8,18 +10,19 @@ lazy_static! {
 const PATH:&str="data.db";
 
 pub fn init()->anyhow::Result<()>{
-  let conn=Connection::open(PATH)?;
+  let dir=utils::get_path();
+  let conn=Connection::open(dir.join(PATH))?;
   conn.execute(
       "create table if not exists app_conf (
           key    varchar(255) PRIMARY KEY,
-          value  TEXT NULL,
+          value  TEXT NULL
       )",
       (), // empty list of parameters.
   )?;
   conn.execute(
     "create table if not exists open_path (
         path    varchar(255) PRIMARY KEY,
-        open_time  varchar(255) NULL,
+        open_time  varchar(255) NULL
     )",
     (), // empty list of parameters.
 )?;

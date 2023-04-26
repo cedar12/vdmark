@@ -7,6 +7,11 @@
 <script setup lang="ts">
 import Layout from './components/Layout/index.vue';
 import Editor from './components/Editor/index.vue';
+import {listen} from '@tauri-apps/api/event';
+import { useI18n } from 'vue-i18n';
+
+const {locale} = useI18n();
+
 // 禁止右键和检查
 //禁止F12
 document.onkeydown = function (event: any) {
@@ -19,6 +24,14 @@ document.onkeydown = function (event: any) {
     //     winEvent.keyCode = 505
     // }
 }
+
+listen('lang',e=>{
+    console.log('lang',e);
+    const payload=e.payload as string;
+    
+    locale.value=payload;
+})
+
  
 //屏蔽右键菜单
 document.oncontextmenu = function (event: any) {

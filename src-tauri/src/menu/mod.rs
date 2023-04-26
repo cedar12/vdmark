@@ -1,5 +1,5 @@
 
-use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, window::MenuHandle};
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, window::MenuHandle, Manager};
 use crate::lang::get_lang;
 
 // #[cfg(not(target_os="windows"))]
@@ -50,7 +50,6 @@ pub fn update_menu(lang:String,menu_handle:MenuHandle){
         menu_handle.get_item("view.ir").set_title(locale.view.ir).unwrap();
         menu_handle.get_item("view.sv").set_title(locale.view.sv).unwrap();
     });
-    
 }
 
 

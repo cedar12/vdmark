@@ -47,10 +47,9 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.cedar12.rdmark",
+      "identifier": "com.cedar12.vdmark",
       "targets": "all",
       "resources": [
-        "lang/*",
         "example/*"
       ]
     },

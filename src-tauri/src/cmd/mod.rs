@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use reqwest::blocking::Client;
-use tauri::{Window};
+use tauri::{Window, Builder, Wry, EventLoopMessage};
 
 use crate::{lang::Lang, db};
 
@@ -34,8 +34,8 @@ pub fn save_file(path:String,content:String)->Option<String>{
 pub fn update_menu_lang(window:Window,lang:String){
   eprintln!("update_lang {}",lang);
   db::set_conf("lang".into(),lang.clone());
-  //let menu_handle=window.menu_handle();
-  //crate::menu::update_menu(lang, menu_handle);
+  // let menu_handle=window.menu_handle();
+  // crate::menu::update_menu(lang, menu_handle);
 }
 
 #[tauri::command]
