@@ -15,6 +15,7 @@ lazy_static!{
 #[derive(Debug, Deserialize, Serialize,Clone)]
 pub struct Lang{
     pub file:File,
+    pub edit:Edit,
     pub help:Help,
     pub view:View,
 }
@@ -27,6 +28,11 @@ pub struct File{
     pub save:String,
     pub saveas:String,
     pub config:String,
+}
+
+#[derive(Debug, Deserialize, Serialize,Clone)]
+pub struct Edit{
+    pub name:String,
 }
 
 #[derive(Debug, Deserialize, Serialize,Clone)]
@@ -44,14 +50,7 @@ pub struct View{
     pub top:String,
 }
 
-// const LANG_DIR:&str="lang";
-
 pub fn get_lang(lang:String)->Lang{
-    // let dir=Path::new(LANG_DIR);
-    
-    // let dir=dir.join(format!("{}.json",lang));
-    
-    // let s=fs::read_to_string(dir).unwrap();
     let locale=LOCALE.lock().unwrap();
     if let Some(locale)=locale.get(lang.as_str()){
         let s=String::from_utf8(locale.clone());

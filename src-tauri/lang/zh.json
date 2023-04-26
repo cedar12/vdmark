@@ -1,24 +1,24 @@
-
 {
-    "file":{
-    "name":"文件",
-    "new":"新建",
-    "open":"打开",
-    "save":"保存",
-    "saveas":"另存为",
-    "config":"设置"
+    "file": {
+        "name": "文件",
+        "new": "新建",
+        "open": "打开",
+        "save": "保存",
+        "saveas": "另存为",
+        "config": "设置"
     },
-    "help":{
-    "name":"帮助",
-    "about":"关于"
+    "help": {
+        "name": "帮助",
+        "about": "关于"
     },
     "view": {
-    "name":"查看",
-    "wysiwyg":"所见即所得",
-    "ir":"即时渲染",
-    "sv":"分屏预览",
-    "top":"置顶窗口"
+        "name": "查看",
+        "wysiwyg": "所见即所得",
+        "ir": "即时渲染",
+        "sv": "分屏预览",
+        "top": "置顶窗口"
+    },
+    "edit": {
+        "name": "编辑"
     }
-    
 }
-  

@@ -18,6 +18,9 @@
       "ir":"Instant Rendering",
       "sv":"Split View",
       "top":"Always On Top"
+    },
+    "edit": {
+        "name": "Edit"
     }
 }
   
