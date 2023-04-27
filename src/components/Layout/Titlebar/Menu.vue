@@ -14,6 +14,7 @@ interface SubMenuItem{
   key:string,
   name:string,
   cmd:Array<string>,
+  separator?: boolean,
 }
 
 const menus=reactive<Array<MenuItem>>([
@@ -30,6 +31,7 @@ const menus=reactive<Array<MenuItem>>([
         key:'file.open',
         name:t('menu.file.open'),
         cmd:['Ctrl','Shift','O'],
+        separator:true,
       },
       {
         key:'file.save',
@@ -40,6 +42,13 @@ const menus=reactive<Array<MenuItem>>([
         key:'file.saveas',
         name:t('menu.file.saveas'),
         cmd:['Ctrl','Alt','S'],
+        separator:true,
+      },
+      {
+        key:'file.img',
+        name:t('menu.file.img'),
+        cmd:[],
+        separator:true,
       },
       {
         key:'file.config',
@@ -143,7 +152,7 @@ onBeforeUnmount(()=>{
         <li @click="active=item.key" v-for="item in menus" :key="$t('menu.file.name')">
           <span>{{ item.name }}</span>
           <ul class="sub-menu" :class="{'active':active===item.key}" >
-            <li v-for="subitem in item.submenu" :key="item.key" @click.stop="onClickMenu(subitem.key)">
+            <li v-for="subitem in item.submenu" :key="item.key" @click.stop="onClickMenu(subitem.key)" :class="{separator:subitem.separator===true}">
               <span>{{ subitem.name }}</span>
               <span class="cmd">{{ subitem.cmd.join('+') }}</span>
             </li>
@@ -181,7 +190,7 @@ onBeforeUnmount(()=>{
     height: 30px;
     line-height: 30px;
     &:hover{
-      background-color: var(--hoverBackground);
+      background-color: var(--hoverBackgroundColor);
     }
   }
   ul.sub-menu{
@@ -210,6 +219,9 @@ onBeforeUnmount(()=>{
       .cmd{
         font-size: .3em;
         color: rgb(133, 133, 133);
+      }
+      &.separator{
+        border-bottom: .1em solid var(--hoverBackgroundColor);
       }
     }
   }

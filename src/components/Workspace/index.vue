@@ -17,6 +17,7 @@ import {storeToRefs} from 'pinia';
 import {ref,watch} from 'vue';
 import { dialog } from '@tauri-apps/api';
 import {useI18n} from 'vue-i18n';
+import {Close} from '@icon-park/vue-next';
 
 const {t} = useI18n();
 
@@ -80,7 +81,8 @@ const onSearch=()=>{
     .workspace-item{
       border-bottom: .1em solid var(--hoverBackgroundColor);
       padding: 12px;
-      cursor: pointer;
+      position: relative;
+      cursor: default;
       .item-name{
         font-size: 16px;
         color: var(--textColor);
@@ -91,6 +93,13 @@ const onSearch=()=>{
       }
       &:hover{
         background-color: var(--hoverBackgroundColor);
+      }
+      .item-btn{
+        position: absolute;
+        right: 0;
+        top:0;
+        color: darken(rgb(131, 131, 131),10%);
+        cursor: pointer;
       }
     }
   }

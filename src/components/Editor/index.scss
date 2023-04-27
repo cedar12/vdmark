@@ -8,18 +8,18 @@
     overflow: auto;
   }
   
-  .vditor-ir{
-    z-index: 1;
-    overflow: auto;
-    &>.vditor-reset{
-      box-sizing: border-box;
-      min-height: 100%;
-    }
+  // .vditor-ir{
+  //   z-index: 1;
+  //   // overflow: auto;
+  //   &>.vditor-reset{
+  //     box-sizing: border-box;
+  //     min-height: 100%;
+  //   }
     
-  }
-  .vditor-reset{
-    padding: 1em 2em !important;
-  }
+  // }
+  // .vditor-reset{
+  //   padding: 1em 2em !important;
+  // }
   .vditor-toolbar{
     box-sizing: border-box;
     padding-left: 6px !important;
@@ -27,9 +27,9 @@
   
   .vditor-content{
     width:100vw;
-  }
-  .vditor-content,.vditor-outline,.vditor-ir{
-    height: 100%;
-    overflow: auto;
+    .vditor-reset{
+      box-sizing: border-box;
+      overflow: auto;
+    }
   }
 }

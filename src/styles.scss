@@ -3,9 +3,11 @@ body{
   margin: 0;
   --titlebarHeight:30px;
   --docListWidth:150px;
+  
 }
 
 body{
+  --meskBgColor:rgba(211, 211, 211, 0.781);
   --textColor:rgb(26, 25, 25);
   --backgroundColor: #fff;
   --hoverBackgroundColor: #ccc;
@@ -13,6 +15,7 @@ body{
   background-color: var(--backgroundColor);
 }
 body[theme='dark']{
+  --meskBgColor:rgba(61, 61, 61, 0.781);
   --textColor:#ccc;
   --backgroundColor: #24292e;
   --hoverBackgroundColor: #18191a;
@@ -29,6 +32,24 @@ body[theme='dark']{
     
   }
 
+}
+
+.app-mesk{
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--meskBgColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after{
+    content: 'Exporting image, Please wait';
+    display: block;
+    color: var(--textColor);
+  }
 }
 
 ::-webkit-scrollbar {

@@ -26,7 +26,7 @@
 </template>
 <script setup lang="ts">
 import {appWindow} from '@tauri-apps/api/window';
-import {open,save} from '@tauri-apps/api/dialog';
+import {ask, open,save} from '@tauri-apps/api/dialog';
 import { invoke } from "@tauri-apps/api/tauri";
 import './index.scss';
 import {useEditorStore} from '../../../store/editor';
@@ -38,6 +38,8 @@ import { onBeforeUnmount, onMounted } from 'vue';
 import {Pin,Close,Minus,Browser} from '@icon-park/vue-next';
 import {useI18n} from 'vue-i18n';
 import { dialog } from '@tauri-apps/api';
+import html2canvas from 'html2canvas';
+import {toImage} from '../../../utils';
 
 const {t} = useI18n();
 const editorStore=useEditorStore();
@@ -130,6 +132,9 @@ const onClickMenu=async (key:string)=>{
     case 'file.config':
       showConfig.value=!showConfig.value;
       break;
+    case 'file.img':
+      await exportImage();
+      break;
     case 'view.wysiwyg':
       mode.value='wysiwyg';
       break;
@@ -145,6 +150,45 @@ const onClickMenu=async (key:string)=>{
     case 'help.about':
       showAbout.value=!showAbout.value;
       break;
+  }
+}
+
+const exportImage=async ()=>{
+  const filePath = await save({
+    filters: [{
+      name: 'Image',
+      extensions: ['jpg']
+    }],
+    title:t('menu.file.img')
+  });
+  if(!filePath){
+    return;
+  }
+  const vditor=document.querySelector('.vditor-ir .vditor-reset');
+  let vt=document.querySelector('.vditor-toolbar');
+  if(vditor&&vt){
+    
+    const mesk=document.createElement('div');
+    mesk.className='app-mesk';
+    document.body.appendChild(mesk);
+    appWindow.setResizable(false);
+    toImage(vditor as HTMLElement,window.innerHeight-(appStore.osType==='Windows_NT'?30:0)-(vt as HTMLElement).offsetHeight).then(async (canvas) => {
+      document.body.removeChild(mesk);
+      appWindow.setResizable(true);
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const err=await invoke('save_image',{path:filePath,base64:imgData});
+      if(!err){
+        alert('Successful export');
+      }else{
+        alert('Failed export');
+      }
+        
+      
+    }).catch(e=>{
+      document.body.removeChild(mesk);
+      appWindow.setResizable(true);
+      console.error(e);
+    });
   }
 }
 
