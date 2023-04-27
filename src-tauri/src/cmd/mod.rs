@@ -1,7 +1,9 @@
+use std::error::Error;
 use std::{collections::HashMap, vec};
 use reqwest::blocking::Client;
 use tauri::{Window, Builder, Wry, EventLoopMessage};
 
+use crate::utils;
 use crate::{lang::Lang, db, shadow};
 
 
@@ -109,3 +111,18 @@ pub fn build_info()->HashMap<String,String>{
   map.insert("BUILD_RUST_CHANNEL".into(), format!("{}",shadow::BUILD_RUST_CHANNEL)); 
   map
 }
+
+
+#[tauri::command]
+pub fn save_image(path:String,base64:String)->Option<String>{
+  match utils::write_image(path,base64){
+    Ok(())=>{
+      None
+    },
+    Err(e)=>{
+      println!("{:?}",e);
+      Some("".into())
+    }
+  }
+}
+

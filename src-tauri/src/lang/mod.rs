@@ -27,6 +27,7 @@ pub struct File{
     pub open:String,
     pub save:String,
     pub saveas:String,
+    pub img:String,
     pub config:String,
 }
 

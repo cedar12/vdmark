@@ -1,48 +1,54 @@
 use crate::lang::get_lang;
 use tauri::{window::MenuHandle, CustomMenuItem, Manager, Menu, MenuItem, Submenu};
 
+#[cfg(target_os = "macos")]
+const ACCELERATOR_FILE_NEW: &str = "cmd+n";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_FILE_NEW: &str = "ctrl+n";
 
+#[cfg(target_os = "macos")]
+const ACCELERATOR_FILE_OPEN: &str = "cmd+shift+o";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_FILE_OPEN: &str = "ctrl+alt+o";
 
-#[cfg(target_os="macos")]
-const ACCELERATOR_FILE_NEW:&str="cmd+n";
-#[cfg(not(target_os="macos"))]
-const ACCELERATOR_FILE_NEW:&str="ctrl+n";
+#[cfg(target_os = "macos")]
+const ACCELERATOR_FILE_SAVE: &str = "cmd+s";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_FILE_SAVE: &str = "ctrl+s";
 
-#[cfg(target_os="macos")]
-const ACCELERATOR_FILE_OPEN:&str="cmd+shift+o";
-#[cfg(not(target_os="macos"))]
-const ACCELERATOR_FILE_OPEN:&str="ctrl+alt+o";
+#[cfg(target_os = "macos")]
+const ACCELERATOR_FILE_SAVEAS: &str = "cmd+shift+s";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_FILE_SAVEAS: &str = "ctrl+alt+s";
 
-#[cfg(target_os="macos")]
-const ACCELERATOR_FILE_SAVE:&str="cmd+s";
-#[cfg(not(target_os="macos"))]
-const ACCELERATOR_FILE_SAVE:&str="ctrl+s";
+#[cfg(target_os = "macos")]
+const ACCELERATOR_VIEW_WY: &str = "cmd+option+7";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_VIEW_WY: &str = "ctrl+alt+7";
 
-#[cfg(target_os="macos")]
-const ACCELERATOR_FILE_SAVEAS:&str="cmd+shift+s";
-#[cfg(not(target_os="macos"))]
-const ACCELERATOR_FILE_SAVEAS:&str="ctrl+alt+s";
+#[cfg(target_os = "macos")]
+const ACCELERATOR_VIEW_IR: &str = "cmd+option+8";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_VIEW_IR: &str = "ctrl+alt+8";
 
-
-#[cfg(target_os="macos")]
-const ACCELERATOR_VIEW_WY:&str="cmd+option+7";
-
-#[cfg(target_os="macos")]
-const ACCELERATOR_VIEW_IR:&str="cmd+option+8";
-
-#[cfg(target_os="macos")]
-const ACCELERATOR_VIEW_SV:&str="cmd+option+9";
-
+#[cfg(target_os = "macos")]
+const ACCELERATOR_VIEW_SV: &str = "cmd+option+9";
+#[cfg(not(target_os = "macos"))]
+const ACCELERATOR_VIEW_SV: &str = "ctrl+alt+9";
 
 // #[cfg(not(target_os="windows"))]
 pub fn create_menu(lang: String) -> Menu {
     let locale = get_lang(lang);
-    let file_new =
-        CustomMenuItem::new("file.new".to_string(), locale.file.new).accelerator(ACCELERATOR_FILE_NEW);
+    let file_new = CustomMenuItem::new("file.new".to_string(), locale.file.new)
+        .accelerator(ACCELERATOR_FILE_NEW);
 
-    let file_open = CustomMenuItem::new("file.open".to_string(), locale.file.open).accelerator(ACCELERATOR_FILE_OPEN);
-    let file_save = CustomMenuItem::new("file.save".to_string(), locale.file.save).accelerator(ACCELERATOR_FILE_SAVE);
-    let file_saveas = CustomMenuItem::new("file.saveas".to_string(), locale.file.saveas).accelerator(ACCELERATOR_FILE_SAVEAS);
+    let file_open = CustomMenuItem::new("file.open".to_string(), locale.file.open)
+        .accelerator(ACCELERATOR_FILE_OPEN);
+    let file_save = CustomMenuItem::new("file.save".to_string(), locale.file.save)
+        .accelerator(ACCELERATOR_FILE_SAVE);
+    let file_saveas = CustomMenuItem::new("file.saveas".to_string(), locale.file.saveas)
+        .accelerator(ACCELERATOR_FILE_SAVEAS);
+    let file_img = CustomMenuItem::new("file.img".to_string(), locale.file.img);
     let file_config = CustomMenuItem::new("file.config".to_string(), locale.file.config);
     let file = Submenu::new(
         locale.file.name,
@@ -53,12 +59,17 @@ pub fn create_menu(lang: String) -> Menu {
             .add_item(file_save)
             .add_item(file_saveas)
             .add_native_item(MenuItem::Separator)
+            .add_item(file_img)
+            .add_native_item(MenuItem::Separator)
             .add_item(file_config),
     );
 
-    let view_wysiwgy = CustomMenuItem::new("view.wysiwyg".to_string(), locale.view.wysiwyg).accelerator(ACCELERATOR_VIEW_WY);
-    let view_ir = CustomMenuItem::new("view.ir".to_string(), locale.view.ir).accelerator(ACCELERATOR_VIEW_IR);
-    let view_sv = CustomMenuItem::new("view.sv".to_string(), locale.view.sv).accelerator(ACCELERATOR_VIEW_SV);
+    let view_wysiwgy = CustomMenuItem::new("view.wysiwyg".to_string(), locale.view.wysiwyg)
+        .accelerator(ACCELERATOR_VIEW_WY);
+    let view_ir =
+        CustomMenuItem::new("view.ir".to_string(), locale.view.ir).accelerator(ACCELERATOR_VIEW_IR);
+    let view_sv =
+        CustomMenuItem::new("view.sv".to_string(), locale.view.sv).accelerator(ACCELERATOR_VIEW_SV);
     let view_top = CustomMenuItem::new("view.top".to_string(), locale.view.top);
     let view = Submenu::new(
         locale.view.name,
@@ -132,7 +143,3 @@ pub fn update_menu(lang: String, menu_handle: MenuHandle) {
     });
 }
 
-// #[cfg(target_os="windows")]
-// pub fn create_menu(_lang:String)->Menu{
-//     Menu::new()
-// }

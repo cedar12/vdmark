@@ -5,6 +5,7 @@
         "open": "打开",
         "save": "保存",
         "saveas": "另存为",
+        "img":"导出图片",
         "config": "设置"
     },
     "help": {

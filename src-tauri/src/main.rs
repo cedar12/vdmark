@@ -9,6 +9,8 @@ mod lang;
 mod menu;
 mod utils;
 
+mod tests;
+
 use tauri::Manager;
 use window_shadows::set_shadow;
 
@@ -50,6 +52,7 @@ fn main() {
             cmd::update_picgo,
             cmd::set_picgo_server,
             cmd::build_info,
+            cmd::save_image,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
