@@ -1,0 +1,18 @@
+.vdmark-editor-container{
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 30px);
+  overflow: auto;
+  .vdmark-editor{
+    width: 100%;
+    min-height: 30px;
+    outline: none;
+    padding: 1em;
+    h1{
+      &::before{
+        content: '# ';
+        
+      }
+    }
+  }
+}

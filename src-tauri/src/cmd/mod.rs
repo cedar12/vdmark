@@ -3,7 +3,7 @@ use std::{collections::HashMap, vec};
 use reqwest::blocking::Client;
 use tauri::{Window, Builder, Wry, EventLoopMessage};
 
-use crate::utils;
+use crate::{utils, parser};
 use crate::{lang::Lang, db, shadow};
 
 
@@ -126,3 +126,24 @@ pub fn save_image(path:String,base64:String)->Option<String>{
   }
 }
 
+
+#[tauri::command]
+pub fn html2md(html:String)->Option<String>{
+  match parser::html::parse_tag(html.as_str()){
+    Ok(md)=>Some(md),
+    Err(e)=>{
+      println!("{:?}",e);
+      None
+    }
+  }
+}
+#[tauri::command]
+pub fn md2html(md:String)->Option<String>{
+  match parser::md::parse(md.as_str()){
+    Ok(md)=>Some(md),
+    Err(e)=>{
+      println!("{:?}",e);
+      None
+    }
+  }
+}

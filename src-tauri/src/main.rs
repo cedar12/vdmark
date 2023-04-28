@@ -3,11 +3,14 @@
 #[macro_use]
 extern crate lazy_static;
 
+extern crate html5ever;
+
 mod cmd;
 mod db;
 mod lang;
 mod menu;
 mod utils;
+mod parser;
 
 mod tests;
 
@@ -53,6 +56,8 @@ fn main() {
             cmd::set_picgo_server,
             cmd::build_info,
             cmd::save_image,
+            cmd::html2md,
+            cmd::md2html,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

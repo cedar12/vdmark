@@ -1,14 +1,21 @@
 <template>
   <Layout>
-    <Editor/>
+    <Editor v-if="!editorStore.rustEnable"/>
+    <VdmarkEditor v-else></VdmarkEditor>
   </Layout>
 </template>
 
 <script setup lang="ts">
 import Layout from './components/Layout/index.vue';
 import Editor from './components/Editor/index.vue';
+import VdmarkEditor from './components/VdmarkEditor/index.vue';
 import {listen} from '@tauri-apps/api/event';
 import { useI18n } from 'vue-i18n';
+import {useEditorStore} from './store/editor';
+import {storeToRefs} from 'pinia';
+
+const editorStore=useEditorStore();
+
 
 const {locale} = useI18n();
 

@@ -51,6 +51,7 @@ interface EditorStore{
   lineNumberEnable:boolean,
   paths:Array<Path>,
   autoSaveEnable:boolean,
+  rustEnable:boolean,
 }
 
 export const useEditorStore = defineStore('editor', {
@@ -68,6 +69,7 @@ export const useEditorStore = defineStore('editor', {
       lineNumberEnable:false,
       paths:[],
       autoSaveEnable:false,
+      rustEnable:false,
      }
   },
   persist: {

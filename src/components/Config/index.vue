@@ -21,6 +21,10 @@
                 <div>
                     
                     <h2 id="editor">{{ $t('editor') }}</h2>
+                    <label>{{'高性能'}}</label>
+                    <input type="checkbox" v-model="rustEnable"/>
+                    <span class="tip">测试功能</span>
+                    <br/>
                     <label>{{$t('autoSave')}}</label>
                     <input type="checkbox" v-model="autoSaveEnable"/>
                     <br/>
@@ -92,7 +96,7 @@ const appStore=useAppStore();
 const editorStore=useEditorStore();
 
 const {showConfig,theme} = storeToRefs(appStore);
-const {typewriteEnable,counterEnable,codeBlockEnable,lineNumberEnable,autoSaveEnable} = storeToRefs(editorStore);
+const {typewriteEnable,counterEnable,codeBlockEnable,lineNumberEnable,autoSaveEnable,rustEnable} = storeToRefs(editorStore);
 
 const value=ref<string>('zh');
 
